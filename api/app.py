@@ -16,6 +16,15 @@ class User(db.Model):
     def json(self):
         return {'id': self.id, 'pseudo': self.pseudo, 'email': self.email, 'password': self.password}
     
+class Tasks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), nullable=False)
+    done = db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    def json(self):
+        return {'id': self.id, 'title': self.title, 'done': self.done, 'user_id': self.user_id}
+    
 db.create_all()
 
 @app.route('/test', methods=['GET'])
@@ -38,7 +47,7 @@ def create_user():
         db.session.commit()
         return make_response(jsonify({'message': 'user created'}), 200)    
     except Exception as e:
-        return make_response(jsonify({'error': 'aie' + str(e)}), 500)
+        return make_response(jsonify({'error': str(e)}), 500)
     
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -78,3 +87,78 @@ def delete_user(id):
         return make_response(jsonify({'message': 'user deleted', 'user': user.json()}), 200)
     except Exception as e:
         return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/tasks', methods=['POST'])
+def create_task():
+    try:
+        inputs = request.get_json()
+        task = Tasks(title=inputs['title'], done=inputs['done'], user_id=inputs['user_id'])
+        db.session.add(task)
+        db.session.commit()
+        return make_response(jsonify({'message': 'task created'}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    try:
+        tasks = Tasks.query.all()
+        return make_response(jsonify({'tasks': [task.json() for task in tasks] if tasks else []}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/tasks/<id>', methods=['GET'])
+def get_task(id):
+    try:
+        task = Tasks.query.filter_by(id=id).first()
+        return make_response(jsonify({'task': task.json()}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/tasks/<id>', methods=['PUT'])
+def update_task(id):
+    try:
+        inputs = request.get_json()
+        task = Tasks.query.filter_by(id=id).first()
+        task.title = inputs['title']
+        task.done = inputs['done']
+        task.user_id = inputs['user_id']
+        db.session.commit()
+        return make_response(jsonify({'message': 'task updated', 'task': task.json()}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/tasks/<id>', methods=['DELETE'])
+def delete_task(id):
+    try:
+        task = Tasks.query.filter_by(id=id).first()
+        db.session.delete(task)
+        db.session.commit()
+        return make_response(jsonify({'message': 'task deleted', 'task': task.json()}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+# get user tasks
+@app.route('/users/<id>/tasks', methods=['GET'])
+def get_user_tasks(id):
+    try:
+        tasks = Tasks.query.filter_by(user_id=id).all()
+        return make_response(jsonify({'tasks': [task.json() for task in tasks]}), 200)
+    except Exception as e:
+        return make_response(jsonify({'error': str(e)}), 500)
+    
+# User
+"""
+{
+    "pseudo": "ben",
+    "email": "ben@efrei.net",
+    "password": "ben"
+"""
+# Task
+"""
+{
+    "title": "FEUR",
+    "done": 0,
+    "user_id": 1
+}
+"""
