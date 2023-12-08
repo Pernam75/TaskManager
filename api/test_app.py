@@ -2,6 +2,7 @@
 import pytest
 import requests
 
+
 def test_test_route():
     response = requests.get('http://localhost:4000/test')
     assert response.status_code == 200
@@ -50,3 +51,8 @@ def test_delete_task():
     assert response.json()['message'] == 'task deleted'
     response = requests.get('http://localhost:4000/tasks')
     assert len([task for task in response.json()['tasks'] if task['id'] == 1]) == 0
+
+def test_get_user_tasks():
+    response = requests.get('http://localhost:4000/users/1/tasks')
+    assert response.status_code == 200
+    assert isinstance(response.json()['tasks'], list)
