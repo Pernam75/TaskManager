@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
+import regex
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
@@ -35,6 +36,12 @@ def create_user():
     print(request.get_json())
     try:
         inputs = request.get_json()
+        existing_user = User.query.filter_by(email=inputs['email']).first()
+        if existing_user:
+            return make_response(jsonify({'error': 'user already exists'}), 500)
+        # check if the email is in the right format
+        if not regex.match(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", inputs['email']):
+            return make_response(jsonify({'error': 'email is not valid'}), 500)
         user = User(pseudo=inputs['pseudo'], email=inputs['email'], password=inputs['password'])
         db.session.add(user)
         db.session.commit()
