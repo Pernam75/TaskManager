@@ -1,1 +1,3 @@
 # TaskManager
+
+- password encryption
