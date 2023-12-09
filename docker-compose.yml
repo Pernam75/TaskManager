@@ -12,6 +12,7 @@ services:
     depends_on:
       - flask_db
     restart: always
+
   flask_db:
     container_name: flask_db
     image: postgres:12
@@ -23,6 +24,14 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+  
+  react_app:
+    container_name: react_app
+    image: react_app:tag
+    build: ./app
+    ports:
+      - "3000:3000"
+    restart: always
 
 volumes:
   pgdata: {}
