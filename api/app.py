@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS, cross_origin # Import the CORS module
 from os import environ
 import regex
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
 db = SQLAlchemy(app)
+cors = CORS(app)  # Add CORS to the app
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
