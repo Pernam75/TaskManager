@@ -3,9 +3,6 @@ import requests
 from os import environ
 
 FLASK_URL = 'http://localhost:4000'
-# FLASK_URL='http://172.27.0.3:4000'
-# FLASK_URL='http://taskmanager:4000'
-# FLASK_URL='http://flask_app:4000'
 
 def test_test_route():
     response = requests.get(f'{FLASK_URL}/test')
