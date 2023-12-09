@@ -1,12 +1,12 @@
-name: Github Actions
+name: CI
 
 on:
   push:
     branches:
-      - github-actions
+      - main
   pull_request:
     branches:
-      - github-actions
+      - main
 
 jobs:
   build:
