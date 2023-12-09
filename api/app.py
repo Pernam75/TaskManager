@@ -146,19 +146,3 @@ def get_user_tasks(id):
         return make_response(jsonify({'tasks': [task.json() for task in tasks]}), 200)
     except Exception as e:
         return make_response(jsonify({'error': str(e)}), 500)
-    
-# User
-"""
-{
-    "pseudo": "ben",
-    "email": "ben@efrei.net",
-    "password": "ben"
-"""
-# Task
-"""
-{
-    "title": "FEUR",
-    "done": 0,
-    "user_id": 1
-}
-"""
