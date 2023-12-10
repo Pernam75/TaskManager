@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin # Import the CORS module
 from os import environ
 import regex
-import hashlib
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URL')
@@ -45,9 +44,7 @@ def create_user():
         # check if the email is in the right format
         if not regex.match(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", inputs['email']):
             return make_response(jsonify({'error': 'email is not valid'}), 500)
-        # hash the password
-        hashed_password = hashlib.sha256(inputs['password'].encode()).hexdigest()
-        user = User(pseudo=inputs['pseudo'], email=inputs['email'], password=hashed_password)
+        user = User(pseudo=inputs['pseudo'], email=inputs['email'], password=inputs['password'])
         db.session.add(user)
         db.session.commit()
         return make_response(jsonify({'message': 'user created'}), 200)    
