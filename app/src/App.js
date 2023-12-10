@@ -158,15 +158,15 @@ function App() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a onClick={() => document.getElementById('my_modal_3').showModal()}>Create account</a></li>
+              <li><a onClick={() => document.getElementById('my_modal_3').showModal()} id='add_user'>Create account</a></li>
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                   <form className="py-4 flex flex-col" onSubmit={AddAccount}>
                     <h3 className="font-bold text-lg">Add New Account</h3>
-                    <input type="text" name="pseudo" placeholder="Pseudo" className="mt-2 input input-bordered input-accent w-full " required />
-                    <input type="email" name="email" placeholder="Email" className="mt-2 input input-bordered input-accent w-full" required />
-                    <input type="password" name="password" placeholder="Password" className="mt-2 input input-bordered input-accent w-full" required />
-                    <button type="submit" className="btn btn-accent mt-2">Add Account</button>
+                    <input type="text" name="pseudo" placeholder="Pseudo" className="mt-2 input input-bordered input-accent w-full " id='add_user_pseudo' required />
+                    <input type="email" name="email" placeholder="Email" className="mt-2 input input-bordered input-accent w-full" id='add_user_email' required />
+                    <input type="password" name="password" placeholder="Password" className="mt-2 input input-bordered input-accent w-full" id='add_user_password' required />
+                    <button type="submit" className="btn btn-accent mt-2" id='add_user_submit'>Add Account</button>
                   </form>
                 </div>
                 <form method="dialog" className="modal-backdrop">
@@ -193,23 +193,23 @@ function App() {
 
       <div class="flex flex-row h-screen">
         <div class="basis-1/5 bg-base-200 text-secondary-content p-10 flex flex-col">
-          <button className="btn btn-accent w-full mb-5 text-primary-content" onClick={()=>document.getElementById('my_modal_2').showModal()}>Add Task</button>
+          <button className="btn btn-accent w-full mb-5 text-primary-content" onClick={()=>document.getElementById('my_modal_2').showModal()} id='add_task'>Add Task</button>
           <dialog id="my_modal_2" className="modal">
             <div className="modal-box">
               <form className="py-4" onSubmit={AddTask}>
                 <h3 className="font-bold text-lg">Add New Task</h3>
-                <input type="text" name="title" placeholder="Task Title" className="mt-2 input input-bordered input-accent w-full" />
+                <input id='add_task_title' type="text" name="title" placeholder="Task Title" className="mt-2 input input-bordered input-accent w-full" />
                 <label className="block mt-2">
-                  <input type="checkbox" name="done" className="mr-2" />
+                  <input id='add_task_done' type="checkbox" name="done" className="mr-2" />
                   Done
                 </label>
-                <select name="user_id" className="select select-accent w-full mt-2 text-primary-content">
+                <select id='add_task_user' name="user_id" className="select select-accent w-full mt-2 text-primary-content">
                   <option disabled selected className='text-primary-content'>Select user</option>
                   {users.map((user, index) => (
                     <option key={index} value={user.id} className='text-primary-content'>{user.pseudo}</option>
                   ))}
                 </select>
-                <button type="submit" className="btn btn-accent mt-2">Add Task</button>
+                <button id='add_task_submit' type="submit" className="btn btn-accent mt-2">Add Task</button>
               </form>
             </div>
             <form method="dialog" className="modal-backdrop">
@@ -219,7 +219,7 @@ function App() {
 
           <h1 className='text-primary-content'>Users</h1>
 
-          <select className="select select-accent w-full mt-2 text-primary-content">
+          <select className="select select-accent w-full mt-2 text-primary-content" id='select_user'>
             <option disabled selected className='text-primary-content'>Select user</option>
             {users.map((user, index) => (
               <option key={index} className='text-primary-content'>{user.pseudo}</option>
