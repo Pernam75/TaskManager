@@ -94,7 +94,7 @@ function App() {
     const formData = new FormData(e.target);
     const data = {
       title: formData.get('title'),
-      done: formData.get('done') == state,
+      done: formData.get('done') === state,
       user_id: formData.get('user_id'),
     };
     fetch(`http://localhost:4000/tasks/${id}`, {
@@ -148,6 +148,19 @@ function App() {
       .catch(error => console.log(error));
   }
 
+  const handleUserChange = (id) => {
+    if (id === 'all') {
+      refreshTasks();
+    } else {
+      fetch(`http://localhost:4000/users/${id}/tasks`, {
+        method: 'GET',
+      })
+        .then(response => response.json())
+        .then(data => setTasks(data.tasks))
+        .catch(error => console.log(error));
+    }
+  }
+
 
   return (
     <div className="App" data-theme={theme}>
@@ -174,11 +187,12 @@ function App() {
                 </form>
               </dialog>
               <li><a href="https://github.com/Pernam75/TaskManager" target='blank'>GitHub</a></li>
+              <li><a href="https://github.com/Pernam75/TaskManager/network" target='blank'>Branch Networks</a></li>
             </ul>
           </div>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">Task Manager</a>
+            <a className="btn btn-ghost text-xl" target='blank' href={window.location.href}>Task Manager</a>
         </div>
         <div className="navbar-end">
 
@@ -196,8 +210,8 @@ function App() {
           <button className="btn btn-accent w-full mb-5 text-primary-content" onClick={()=>document.getElementById('my_modal_2').showModal()} id='add_task'>Add Task</button>
           <dialog id="my_modal_2" className="modal">
             <div className="modal-box">
-              <form className="py-4" onSubmit={AddTask}>
-                <h3 className="font-bold text-lg">Add New Task</h3>
+              <form className="py-4 text-primary-content" onSubmit={AddTask}>
+                <h3 className="font-bold text-lg ">Add New Task</h3>
                 <input id='add_task_title' type="text" name="title" placeholder="Task Title" className="mt-2 input input-bordered input-accent w-full" />
                 <label className="block mt-2">
                   <input id='add_task_done' type="checkbox" name="done" className="mr-2" />
@@ -217,19 +231,47 @@ function App() {
             </form>
           </dialog>
 
-          <h1 className='text-primary-content'>Users</h1>
+          <div className="divider text-primary-content">Users</div>
 
-          <select className="select select-accent w-full mt-2 text-primary-content" id='select_user'>
+          <button className="btn btn-accent w-full mb-5 text-primary-content mt-5" onClick={()=>document.getElementById('my_modal_3').showModal()}>Create User</button>
+
+          <select className="select select-accent w-full mt-2 text-primary-content" id='select_user' onChange={(e) => handleUserChange(e.target.value)}>
             <option disabled selected className='text-primary-content'>Select user</option>
+            <option value="all" className='text-primary-content'>All</option>
             {users.map((user, index) => (
-              <option key={index} className='text-primary-content'>{user.pseudo}</option>
+              <option key={index} value={user.id} className='text-primary-content'>{user.pseudo}</option>
             ))}
           </select>
+
+
+          
           
         </div>
 
         
         <div class="grid grid-flow-row auto-rows-max basis-4/5 bg-base-100 text-primary-content px-5 overflow-auto">
+          <div className='flex flex-row stats shadow m-4'>
+            <div className="stat text-success">
+              <div className="stat-figure text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-10 h-10 stroke-current ">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <div className="stat-title text-success">Tasks Done</div>
+                <div className="stat-value text-success">{tasks.filter(task => task.done).length}</div>
+                <div className="stat-desc">Its not that hard</div>
+            </div>
+            <div className="stat text-error mr-10">
+              <div className="stat-figure text-error">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-10 h-10 stroke-current">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+              <div className="stat-title text-error">Tasks To do</div>
+                <div className="stat-value">{tasks.filter(task => !task.done).length}</div>
+                <div className="stat-desc">Keep going</div>
+            </div>
+          </div>
           {tasks.map((task, index) => (
             <div>
               <div className="card bg-base-300 text-primary-content m-4">
