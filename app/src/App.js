@@ -192,7 +192,7 @@ function App() {
       </div>
 
       <div class="flex flex-row h-screen">
-        <div class="basis-1/5 bg-base-200 text-secondary-content p-10 flex-row">
+        <div class="basis-1/5 bg-base-200 text-secondary-content p-10 flex flex-col">
           <button className="btn btn-accent w-full mb-5 text-primary-content" onClick={()=>document.getElementById('my_modal_2').showModal()}>Add Task</button>
           <dialog id="my_modal_2" className="modal">
             <div className="modal-box">
