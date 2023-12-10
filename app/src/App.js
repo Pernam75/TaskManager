@@ -148,6 +148,19 @@ function App() {
       .catch(error => console.log(error));
   }
 
+  const handleUserChange = (id) => {
+    if (id === 'all') {
+      refreshTasks();
+    } else {
+      fetch(`http://localhost:4000/users/${id}/tasks`, {
+        method: 'GET',
+      })
+        .then(response => response.json())
+        .then(data => setTasks(data.tasks))
+        .catch(error => console.log(error));
+    }
+  }
+
 
   return (
     <div className="App" data-theme={theme}>
@@ -219,10 +232,11 @@ function App() {
 
           <h1 className='text-primary-content'>Users</h1>
 
-          <select className="select select-accent w-full mt-2 text-primary-content">
+          <select className="select select-accent w-full mt-2 text-primary-content" onChange={(e) => handleUserChange(e.target.value)}>
             <option disabled selected className='text-primary-content'>Select user</option>
+            <option value="all" className='text-primary-content'>All</option>
             {users.map((user, index) => (
-              <option key={index} className='text-primary-content'>{user.pseudo}</option>
+              <option key={index} value={user.id} className='text-primary-content'>{user.pseudo}</option>
             ))}
           </select>
           
