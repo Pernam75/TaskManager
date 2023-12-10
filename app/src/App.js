@@ -209,8 +209,8 @@ function App() {
           <button className="btn btn-accent w-full mb-5 text-primary-content" onClick={()=>document.getElementById('my_modal_2').showModal()}>Add Task</button>
           <dialog id="my_modal_2" className="modal">
             <div className="modal-box">
-              <form className="py-4" onSubmit={AddTask}>
-                <h3 className="font-bold text-lg">Add New Task</h3>
+              <form className="py-4 text-primary-content" onSubmit={AddTask}>
+                <h3 className="font-bold text-lg ">Add New Task</h3>
                 <input type="text" name="title" placeholder="Task Title" className="mt-2 input input-bordered input-accent w-full" />
                 <label className="block mt-2">
                   <input type="checkbox" name="done" className="mr-2" />
@@ -222,7 +222,7 @@ function App() {
                     <option key={index} value={user.id} className='text-primary-content'>{user.pseudo}</option>
                   ))}
                 </select>
-                <button type="submit" className="btn btn-accent mt-2">Add Task</button>
+                <button type="submit" className="btn btn-accent mt-2 ">Add Task</button>
               </form>
             </div>
             <form method="dialog" className="modal-backdrop">
@@ -230,7 +230,7 @@ function App() {
             </form>
           </dialog>
 
-          <h1 className='text-primary-content'>Users</h1>
+          <div className="divider text-primary-content">Users</div>
 
           <button className="btn btn-accent w-full mb-5 text-primary-content mt-5" onClick={()=>document.getElementById('my_modal_3').showModal()}>Create User</button>
 
@@ -249,6 +249,28 @@ function App() {
 
         
         <div class="grid grid-flow-row auto-rows-max basis-4/5 bg-base-100 text-primary-content px-5 overflow-auto">
+          <div className='flex flex-row stats shadow m-4'>
+            <div className="stat text-success">
+              <div className="stat-figure text-success">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-10 h-10 stroke-current ">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <div className="stat-title text-success">Tasks Done</div>
+                <div className="stat-value text-success">{tasks.filter(task => task.done).length}</div>
+                <div className="stat-desc">Its not that hard</div>
+            </div>
+            <div className="stat text-error mr-10">
+              <div className="stat-figure text-error">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-10 h-10 stroke-current">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </div>
+              <div className="stat-title text-error">Tasks To do</div>
+                <div className="stat-value">{tasks.filter(task => !task.done).length}</div>
+                <div className="stat-desc">Keep going</div>
+            </div>
+          </div>
           {tasks.map((task, index) => (
             <div>
               <div className="card bg-base-300 text-primary-content m-4">
