@@ -94,7 +94,7 @@ function App() {
     const formData = new FormData(e.target);
     const data = {
       title: formData.get('title'),
-      done: formData.get('done') == state,
+      done: formData.get('done') === state,
       user_id: formData.get('user_id'),
     };
     fetch(`http://localhost:4000/tasks/${id}`, {
@@ -171,7 +171,6 @@ function App() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a onClick={() => document.getElementById('my_modal_3').showModal()}>Create account</a></li>
               <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                   <form className="py-4 flex flex-col" onSubmit={AddAccount}>
@@ -187,11 +186,12 @@ function App() {
                 </form>
               </dialog>
               <li><a href="https://github.com/Pernam75/TaskManager" target='blank'>GitHub</a></li>
+              <li><a href="https://github.com/Pernam75/TaskManager/network" target='blank'>Branch Networks</a></li>
             </ul>
           </div>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">Task Manager</a>
+            <a className="btn btn-ghost text-xl" target='blank' href={window.location.href}>Task Manager</a>
         </div>
         <div className="navbar-end">
 
@@ -232,6 +232,8 @@ function App() {
 
           <h1 className='text-primary-content'>Users</h1>
 
+          <button className="btn btn-accent w-full mb-5 text-primary-content mt-5" onClick={()=>document.getElementById('my_modal_3').showModal()}>Create User</button>
+
           <select className="select select-accent w-full mt-2 text-primary-content" onChange={(e) => handleUserChange(e.target.value)}>
             <option disabled selected className='text-primary-content'>Select user</option>
             <option value="all" className='text-primary-content'>All</option>
@@ -239,6 +241,9 @@ function App() {
               <option key={index} value={user.id} className='text-primary-content'>{user.pseudo}</option>
             ))}
           </select>
+
+
+          
           
         </div>
 
