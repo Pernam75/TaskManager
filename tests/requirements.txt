@@ -1,2 +1,4 @@
 requests
 pytest
+selenium==4.8.3
+webdriver-manager==4.0.0
