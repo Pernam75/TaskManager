@@ -1,5 +1,7 @@
 # TaskManager
 
+![meme](https://github.com/Pernam75/TaskManager/assets/58521821/6b7ef78b-ccc0-4b28-8974-93fb454de82b)
+
 ## Description
 
 This is a simple task manager app that allows you to create, edit, and delete tasks. You can create users and assign tasks to them. You can also mark tasks as complete, and view all tasks assigned to a user.
