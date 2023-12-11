@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - release
+  pull_request:
+    branches:
+      - main
+      - release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name : run and build the docker-compose file
+        run: |
+          docker compose up --build -d
+          sleep 20
+      - name: Set up npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install and test the app
+        run: |
+          cd app
+          npm install
+          npm run test a
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          pip install -r ./tests/requirements.txt
+      - name : run the tests folder
+        run : pytest tests/        
+      - name : down the docker-compose file
+        run: docker compose down
