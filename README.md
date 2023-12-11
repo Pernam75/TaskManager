@@ -1,6 +1,8 @@
 # TaskManager
 
-![meme](https://github.com/Pernam75/TaskManager/assets/58521821/6b7ef78b-ccc0-4b28-8974-93fb454de82b)
+<p align="center">
+  <img width="300" height="225" src="https://github.com/Pernam75/TaskManager/assets/58521821/6b7ef78b-ccc0-4b28-8974-93fb454de82b">
+</p>
 
 ## Description
 
