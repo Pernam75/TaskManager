@@ -31,4 +31,3 @@ You can view the tests in the [tests folder](https://github.com/Pernam75/TaskMan
 ## License
 
 MIT License
-
