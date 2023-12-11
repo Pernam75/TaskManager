@@ -33,7 +33,7 @@ This is a simple task manager app that allows you to create, edit, and delete ta
 ## Github Actions
 
 The release and main branches are protected by Github Actions, the tests will run on every push and pull request to these branches.
-You can view the tests in the [tests folder](https://github.com/Pernam75/TaskManager/tree/release/tests).
+You can view the tests in the [tests folder](https://github.com/Pernam75/TaskManager/tree/main/tests).
 
 ## Upcoming Features
 
@@ -43,6 +43,15 @@ You can view the tests in the [tests folder](https://github.com/Pernam75/TaskMan
 - [ ] Add a search bar to the app
 - [ ] Add a calendar to the app through API integration
 - [ ] Add a pomodoro timer to the app
+
+## Technologies
+
+- [React](https://reactjs.org/) for the frontend
+- [Python](https://www.python.org/) for the backend
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) for the API
+- [PostgreSQL](https://www.postgresql.org/) for the database
+- [Docker](https://www.docker.com/) for containerization
+- [Pytest](https://docs.pytest.org/en/stable/), [Selenium](https://www.selenium.dev/), and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing
 
 ## License
 
