@@ -22,7 +22,7 @@ This is a simple task manager app that allows you to create, edit, and delete ta
 ## Github Actions
 
 The release and main branches are protected by Github Actions, the tests will run on every push and pull request to these branches.
-You can view the tests in the tests[https://github.com/Pernam75/TaskManager/tree/main/tests] folder.
+You can view the tests in the [tests folder](https://github.com/Pernam75/TaskManager/tree/release/tests).
 
 ## License
 
